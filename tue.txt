@@ -1,0 +1,66 @@
+{% extends 'user/base.html' %}
+
+{%block title%}
+Home
+{% endblock title%}
+
+{% block css %}
+{{url_for('static',filename="css/birthdaylog.css")}}
+{% endblock css%}
+
+{% block content%}
+
+
+        <!-- <form action="{{ url_for('submit')}}" method="POST"> -->
+
+
+            <p class=" alert alert-dark"  id="feed"></p>
+
+            <input type="text" name="fullname" placeholder="Fullname" class="form-control" id="fullname" >
+
+            <textarea name="message" class="form-control" cols="30" rows="10" placeholder="Message" id="message"></textarea>
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" id="csrf_token">
+
+            
+
+	<!-- <button class="btn btn-danger" onclick="alert(document.getElementById('Txt').value)">Submit</button> -->
+	<button class="btn btn-danger" type="button" id="btn">Submit</button>
+<!-- </form> -->
+
+{% block jquery %}
+
+{{ super() }}
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#btn').click(function(){
+            fullname = $('#fullname').val()
+            message = $('#message').val()
+            csrf_token  = $('#csrf_token').val()
+            
+            var data2send = "fname="+fullname+"&msg="+message+"&csrf_token="+csrf_token
+            var data2send = $('#myform').serialize()
+            alert(data2send)
+
+
+            //  Make ajax request
+            $.ajax({
+                url:"{{ url_for('submit')}}",
+                type: 'POST',
+                dataType:'text',
+                data:data2send,
+                success:function(rsp){
+                    $('#feed').html(rsp)
+                    $('#fullname').val('')
+                },
+                error:function(errmsg){
+                    console.log(errmsg)
+                }
+            })
+        })
+    })
+</script>
+
+{% endblock jquery%}
+{% endblock content%}

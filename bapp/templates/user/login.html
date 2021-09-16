@@ -1,0 +1,55 @@
+{% extends 'user/base.html' %}
+
+{%block title%}
+Home
+{% endblock title%}
+
+{% block css %}
+{{url_for('static',filename="css/birthdaylog.css")}}
+{% endblock css%}
+
+{% block content%}
+	<div class="container-fluid parent">
+	<div class="row text-center">
+			<div class="col-sm-12">
+				<h2 class="banner">Member Login </h2>
+				{% with m = get_flashed_messages() %}
+				{% if m %}
+<div class="alert alert-info">
+				{{m }}
+			</div>
+				{% endif %}
+				{% endwith %}
+			</div>
+		</div>
+
+
+<div class="row blue">
+    <div class="col-sm-12 text-center">
+        <form action="{{ url_for('loginpage')}}" method="post">
+
+			{{ logform.username(placeholder='Username',class_='form-control formelement button1') }}<br><br>
+			<span style="color:red">{{ logform.username.errors }}</span>
+            
+</div>
+</div>
+<div class="row blue">
+    <div class="col-sm-12 text-center">
+		{{ logform.password(placeholder='Password',class_='form-control formelement button2') }}<br><br>
+		<span style="color:red">{{ logform.password.errors }}</span>
+</div>
+</div>
+	<div class="row blue">
+		<div class="col-sm-12 text-center">
+        
+
+			{{ logform.submit(class_='form-control btn btn-outline-dark formelement') }}
+
+			{{ logform.terms() }}
+
+			{{ logform.csrf_token()}}
+	 
+</form>
+</div>
+</div>
+{% endblock content%}

@@ -1,0 +1,6 @@
+<store>
+<productName>Laptop</productName>
+<productDescription>Test Product</productDescription>
+productPrice>79000</productPrice>
+
+</store>

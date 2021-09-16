@@ -1,0 +1,47 @@
+{% extends 'user/base.html' %}
+
+{%block title%}
+Home
+{% endblock title%}
+
+{% block css %}
+{{url_for('static',filename="css/birthday.css")}}
+{% endblock css%}
+
+
+{% block content%}
+	<div style='min-height:300px'>
+        {% with m=get_flashed_messages() %}
+{% if m %}
+
+{{ m }}
+{% endif %}
+        {% endwith%}
+        <h3>{{ data }} Dashboard</h3>
+
+        <img src="{{picture}}" alt="" sizes="" srcset="">
+
+        <table >
+                <tr class="table-secondary">
+                        {% if data.member_pix == '' %}
+                        <img src="{{ url_for ('static',filename='images/cohort18.png')}}" alt="profile" width="70px">
+                        {% else %}
+                        <img src="{{ picture }}" height="100">
+                        {% endif %}
+                        <td ><a href="{{ url_for('uploadimage')}}">Change Images</a></td></a>
+                        
+                </tr>
+                <tr class="table-secondary">
+                        <td><a href="{{ url_for('editprofile')}}">Edit Profile</a></td>
+                        
+                </tr>
+                <tr class="table-secondary">
+                        <td><a href="{{ url_for('fav')}}">My Favourites</a></td>
+                </tr>
+        </table>
+    </div>
+
+    {{ allusers }}
+
+{% endblock content%}
+	

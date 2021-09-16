@@ -1,0 +1,35 @@
+{% extends 'user/base.html' %}
+
+{%block title%}
+Profile Edit
+{% endblock title%}
+
+{% block css %}
+{{url_for('static',filename="css/birthday.css")}}
+{% endblock css%}
+
+
+{% block content%}
+
+<form action="{{ url_for('uploadimage')  }}" method="POST" enctype="multipart/form-data">
+    <h1>Photo gallery</h1>
+    <fieldset>
+        <label for="">Caption</label>
+        <input type="text" name="caption" class="form-control">
+    </fieldset>
+    <br>
+    <fieldset>
+        <label for="">File</label>
+
+        <input type="file" class="form-control" name="pix">
+    </fieldset>
+
+    <br>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    <button class=" btn btn-primary" >Submit</button>
+</form>
+
+
+
+{% endblock content%}

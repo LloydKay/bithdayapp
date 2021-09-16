@@ -1,0 +1,35 @@
+/*
+Author: Toluwanimi Sola-Adeyemi
+Date: 1/September/2021
+Program:  External StyleSheet for Birthday App
+*/
+
+body{background-color:#FFF6ea}
+.bg-tolu{background-color:#33658A}
+.sidebar{float:right;position:relative;top:30px}
+p{font-family:futura}
+.parent{position:absolute;}
+.overlay{
+	background-color:rgba(255,255,255,0.4) !important;
+	background-size:cover}
+.blue{height:100px}
+.bus{position:relative;margin:auto;bottom:10px}
+#bus{box-shadow:10px 10px 10px #ccc;height:300px;width:300px}
+.banner{
+	position:relative;
+	height:100px;
+    top:30px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:40px;
+	}
+.info{height:200px;background-color:#FFD60A
+	}
+.hello{height:400px;position:relative;}
+.button1{position:relative;width:35%;top:40px;}
+.button2{position:relative;width:35%;top:20px;}
+.formelement{width:35%;margin:auto;}
+.footer{
+	text-align:center;
+	height:100px;
+	line-height:100px;
+	}

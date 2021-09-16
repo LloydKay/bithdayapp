@@ -1,0 +1,90 @@
+{% extends 'user/base.html' %}
+
+{%block title%}
+Home
+{% endblock title%}
+
+{% block css %}
+{{url_for('static',filename="css/birthday.css")}}
+{% endblock css%}
+
+
+{% block content%}
+
+{{ deets }}
+<div>
+    <!-- <form   id="paymentForm" name="paymentForm"> -->
+        <form  id="paymentForm" name="paymentFormXX" action="{{ url_for('donate2')}}"  >
+        <table class="table">
+
+   
+            <thead>
+              <tr>
+                <th scope="col">Transaction ID </th>
+                
+                <th scope="col">Amount</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                
+                <td>{{ deets.trx_ref }}</td>
+                <td>{{ deets.trx_amt }}</td>
+                
+              </tr>
+           <!--    <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td colspan="2">Larry the Bird</td>
+                <td>@twitter</td>
+              </tr>
+            </tbody> -->
+          </table>
+        
+          <button type="button" class="btn btn-dark" onclick="document.location.href='/donate'">Cancel</button>
+           <button class="btn btn-light" type="button" onclick="payWithPaystack()">Proceed</button>
+
+           <button class="btn btn-danger" type="submit" onclick="url_for('donate2')">Proceed</button>
+
+
+	<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    </form>
+    
+</div>
+<script src="https://js.paystack.co/v1/inline.js"></script>
+
+<script type="text/javascript">
+
+var paymentForm = document.getElementById('paymentForm');
+paymentForm.addEventListener('submit', payWithPaystack, false);
+function payWithPaystack() {
+  var handler = PaystackPop.setup({
+    key: 'pk_test_da64e742b19e0f052b9692792c003eae34eb0061', // Replace with your public key
+    email: '{{ deets.user.member_email}}',
+    amount: '{{ deets.trx_amt}}', // the amount value is multiplied by 100 to convert to the lowest currency unit
+    currency: 'NGN', // Use GHS for Ghana Cedis or USD for US Dollars
+    ref: "{{ session.get('ref')}}", // Replace with a reference you generated
+    callback: function(response) {
+      //this happens after the payment is completed successfully
+      var reference = response.reference;
+      alert('Payment complete! Reference: ' + reference);
+
+      console.log(response)
+      // Make an AJAX call to your server with the reference to verify the transaction
+    },
+    onClose: function() {
+      alert('Transaction was not completed, window closed.');
+    },
+  });
+  handler.openIframe();
+}
+</script>
+
+{% endblock content%}

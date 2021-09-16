@@ -1,0 +1,157 @@
+{% extends 'user/base.html' %}
+
+{%block title%}
+Home
+{% endblock title%}
+
+{% block css %}
+{{url_for('static',filename="css/birthdaylog.css")}}
+{% endblock css%}
+
+{% block content%}
+
+
+        <!-- <form action="{{ url_for('submit')}}" method="POST"> -->
+            
+            <form id="myform" action="#">
+
+            <p class=" alert alert-dark"  id="feed"></p>
+
+            <input type="text" name="fullname" placeholder="Fullname" class="form-control" id="fullname" >
+            
+            <a href="#" id="check">Check Availability</a>
+            <!-- <a href="javascript:void(0)" id="check">Check Availability</a> -->
+
+            <textarea name="message" class="form-control" cols="30" rows="10" placeholder="Message" id="message"></textarea>
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" id="secure" >
+
+
+            
+
+	        <button class="btn btn-danger" type="button" id="btn">Submit</button>
+
+
+        </form>
+        
+	<!-- <button class="btn btn-danger" onclick="alert(document.getElementById('Txt').value)">Submit</button> -->
+<!-- </form> -->
+
+{% block jquery %}
+
+{{ super() }}
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+
+        $('#allstate').change(function(){
+            var stateid = $(this).val()
+
+
+            id2send = "stateid="+stateid
+
+
+            $.ajax({
+                url:"{{ url_for('xchn')}}",
+                data: id2sent,
+                type:'POST',
+                success:function(msg){
+                    
+                    console.log(msg);
+                    alert(msg.status)
+                    if (msg['status'] == 0){
+
+                    }else{
+                        
+                    }
+                }
+            
+        })
+    })
+            
+
+        $('#check').click(function(){
+            var f = document.getElementById('fullname').ariaValueMax
+
+            str2send = "fullname="+f
+
+            $.ajax({
+                url:"{{ url_for('available')}}",
+                data: str2send,
+                type:'GET',
+                dataType:'json',
+                success:function(msg){
+                    // $('#feed').text(msg)
+                    // $('#feed').removeClass('alert alert-danger alert-success')
+                    // if (msg == 'Name has been taken'){
+                    //     $('#feed').addClass('alert alert-danger')
+                    // }else{
+                    //     $('#feed').addClass('alert alert-success')
+                    // }
+                    // alert(msg)
+                    console.log(msg);
+                    alert(msg.status)
+                    if (msg['status'] == 0){
+
+                    }else{
+                        
+                    }
+                }
+            })
+        })
+
+
+
+
+
+        $('#btn').click(function(){
+            fullname = $('#fullname').val()
+            message = $('#message').val()
+            csrf_token  = $('#csrf_token').val()
+            
+            var data2send = "fname="+fullname+"&msg="+message+"&csrf_token="+"{{csrf_token}}"
+            var data2send = $('#myform').serialize()
+            alert(data2send)
+
+            form = document.getElementById('myform')
+            form = document.querySelector('myform')
+            form = $('#myform')[0]
+            var data2send = new FormData(form)
+            data2send.append('csrf-token', '{{ csrf_token()}}')
+            data2send.append("feed", "mes")
+
+            
+            //  Make ajax request
+            
+            $.ajax({
+                url:"{{ url_for('submit')}}",
+                type: 'POST',
+                dataType:'text',
+                data:data2send,
+                cache:false,
+                processData:false,
+                contentType:false,
+                data:FormData,
+                beforeSend:function(){
+                    $('#btn').html('Please wait......')
+                },
+                success:function(rsp){
+                    $('#feed').html(rsp)
+                    $('#fullname').val('')
+                    $('#btn').html('Submit')
+
+                    
+                },
+                error:function(errmsg){
+                    console.log(errmsg)
+                    $('#btn').html('Submit')
+
+                }
+            })
+        })
+    })
+</script>
+
+{% endblock jquery%}
+{% endblock content%}

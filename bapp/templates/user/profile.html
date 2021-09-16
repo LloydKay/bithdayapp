@@ -1,0 +1,84 @@
+{% extends 'user/base.html' %}
+
+{%block title%}
+Home
+{% endblock title%}
+
+{% block css %}
+{{url_for('static',filename="css/birthday.css")}}
+{% endblock css%}
+
+{% block content%}
+	<div class="container-fluid parent">
+	<div class="row text-center">
+			<div class="col-sm-12">
+				<h2 class="banner">Registration Page </h2>
+				{% with m = get_flashed_messages() %}
+				{% if m %}
+
+				{{m }}
+				{% endif %}
+				{% endwith %}
+			</div>
+		</div>
+		<form action="" method="post" onsubmit="return validation()">
+
+            <div class="row blue">
+                <div class="col-sm-12 text-center">
+            
+                        <input type="date" class="form-control formelement" placeholder="DOB" name="dob" id="dob" value="{{data.member_dob}}">
+                </div>
+            </div>
+
+	<div class="row blue">
+		<div class="col-sm-12 text-center">
+	
+				<input type="text" class="form-control formelement" placeholder="First Name" name="fname" id="fname" value="{{data.member_fname}}">
+		</div>
+	</div>
+		<div class="row blue">
+		<div class="col-sm-12 text-center">
+<input type="text" class="form-control formelement" placeholder="Last Name" name="lname" id="lname" value="{{data.member_lname}}">
+</div>
+</div>
+<div class="row blue">
+    <div class="col-sm-12 text-center">
+		
+</div>
+</div>
+<div class="row blue">
+    <div class="col-sm-12 text-center">
+        
+</div>
+</div>
+<div class="row blue">
+    <div class="col-sm-12 text-center">
+        
+</div>
+</div>
+	<div class="row blue">
+		<div class="col-sm-12 text-center">
+	<input type="submit" class="form-control btn btn-outline-dark formelement" value="Register">
+	<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+
+</div>
+</div>
+</form>
+<script type="text/javascript">
+function validation(){
+	var fname= document.getElementById('fname').value;
+	var lname= document.getElementById('lname').value;
+	var pass1= document.getElementById('pass1').value;
+	var pass2= document.getElementById('pass2').value;
+	if(fname =='' || lname=='' || pass1==''){
+		alert('Please complete all the fields')
+		return false
+	}else if(pass1!=pass2){
+		alert('The two password fields must match')
+		return false
+	}
+}
+
+</script>
+{% endblock content%}

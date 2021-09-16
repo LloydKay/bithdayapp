@@ -1,0 +1,33 @@
+{% extends 'user/base.html' %}
+
+{%block title%}
+Home
+{% endblock title%}
+
+{% block css %}
+{{url_for('static',filename="css/birthday.css")}}
+{% endblock css%}
+
+
+{% block content%}
+
+{% set m = get_flashed_messages() %}
+{{ m }}
+
+<form action="{{url_for('donate')}}" method="post">
+	 
+    <div class="row blue">
+		<div class="col-sm-12 text-center">
+	
+	<input type="text" class="form-control formelement" id="amt" name="amt" placeholder="Enter Amount">
+		</div>
+	</div> 
+	<div class="row blue">
+		<div class="col-sm-12 text-center">
+	<input type="submit" class="form-control btn btn-outline-dark formelement" value="Proceed">
+	<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+</div>
+</div>
+</form>
+
+{% endblock content%}

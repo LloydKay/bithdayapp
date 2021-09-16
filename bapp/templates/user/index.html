@@ -1,0 +1,44 @@
+{% extends 'user/base.html' %}
+
+{%block title%}
+Home
+{% endblock title%}
+
+{% block css %}
+{{url_for('static',filename="css/birthday.css")}}
+{% endblock css%}
+
+
+{% block content%}
+
+
+	<div class="container-fluid parent">
+	<div class="row text-center">
+			<div class="col-sm-12">
+				<h1 class="banner">Association of Python Class</h1>
+			</div>
+		</div>
+
+	<div class="row hello">
+		<div class="col-sm-12 bus text-center">
+			<img src="{{url_for('static',filename='images/cohort18.png')}}" id="bus">
+		</div>
+	</div>
+
+	<div class="row info">
+		<div class="overlay col-sm-12 text-center">
+
+			{% if session.get('userid') == None %}
+
+			{{ weekno }}
+		
+	<a href='{{ url_for("loginpage")}}' class="btn btn-outline-dark form-control button1">Login </a><br>
+      
+
+<a href='{{url_for("registration")}}' class="btn btn-outline-dark form-control button2">New User? Register Here</a>
+   
+			{% endif %}
+</div>
+</div>
+{% endblock content%}
+	

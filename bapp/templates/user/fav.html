@@ -1,0 +1,75 @@
+{% extends 'user/base.html' %}
+
+{%block title%}
+Home
+{% endblock title%}
+
+{% block css %}
+{{url_for('static',filename="css/birthday.css")}}
+{% endblock css%}
+
+
+{% block content%}
+	<div style='min-height:300px'>
+        {% with m=get_flashed_messages() %}
+{% if m %}
+
+{{ m }}
+{% endif %}
+        {% endwith%}
+        <h3>{{ data }} My Favourites</h3>
+
+        <table >
+                
+        </table>
+    </div>
+
+    {% if myfav|length == 0 %}
+
+    <div class="col-md-9">
+
+    <div class="alert alert-info"> You have no added any fav yet </div>
+
+    </div>
+
+    {% endif %}
+
+    <div class="col-md-3">
+        
+
+    </div>
+
+    <div class="row">
+        <div class="col">
+
+            {{ myfav_techid }}
+
+            <form action="{{ url_for('newfav') }}" method="POST">
+                <table class="table table-striped">
+                    <tr>
+                        <th>Serial</th>
+                        <th>Technology</th>
+                        <th><input type="checkbox" id='checkall'></th>
+                    </tr>
+                    {% for t in techs %}
+                    <tr> 
+                        <td>{{ loop.index }}</td>
+                        <td>{{ t.tech_name }}</td>
+                        <td><input type="checkbox" id='checkall' name='techid' value="{{ t.tech_id }}" {% if t.tech_id in myfav_techid %} checked {% endif%}></td>
+                    </tr>
+                    {% endfor %}
+                    <tr> 
+                        <td colspan='3'><button class="btn btn-primary">Submit</button></td>
+                        <input type='hidden' name="csrf_token" value='{{csrf_token()}}'>
+                        
+                    </tr>
+                </table>
+               </form>
+
+            
+        </div>
+    </div>
+
+
+{% endblock content%}
+	
